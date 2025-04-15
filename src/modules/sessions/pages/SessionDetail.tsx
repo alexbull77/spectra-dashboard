@@ -10,6 +10,9 @@ import { ArrowLeft, Trash } from "lucide-react";
 import { microfrontendQueryOptions } from "../microfrontendQueryOptions";
 import { deleteMicrofrontend } from "@/api";
 import { toast } from "sonner";
+import { ShareSessionDialog } from "../components/ShareSessionDialog";
+import { sessionQueryOptions } from "../sessionQueryOptions";
+import { useUser } from "@clerk/clerk-react";
 
 export const SessionDetail = () => {
   const { sessionId } = useParams();
@@ -32,7 +35,13 @@ export const SessionDetail = () => {
     setSelectedMicrofrontendId(microfrontends?.[0]?.id);
   }, [microfrontends]);
 
+  const { user } = useUser();
+  const { data: sessions } = useQuery(sessionQueryOptions.sessions(user?.id));
+
   if (!sessionId) return null;
+
+  const isOwner =
+    sessions.find((s) => s.id === sessionId)?.user_id === user?.id;
 
   return (
     <div className="flex flex-col p-8 w-screen h-[calc(100vh-40px)] gap-y-8">
@@ -43,6 +52,7 @@ export const SessionDetail = () => {
         </Button>
         <h2 className="text-2xl font-bold mb-4">Session: </h2>
         <h2 className="text-2xl mb-4 text-gray-700">{sessionId}</h2>
+        <ShareSessionDialog sessionId={sessionId} disabled={!isOwner} />
       </div>
 
       {!microfrontends.length && !isFetching ? (
@@ -66,6 +76,7 @@ export const SessionDetail = () => {
                   <span>{`${name} (${version})`}</span>
                 </TabsTrigger>
                 <Button
+                  disabled={!isOwner}
                   variant="ghost"
                   size="icon"
                   onClick={(e) => {

@@ -4,12 +4,18 @@ import { getSpectraClient, graphql, ResultOf } from "../client";
 const fetchSessionsQuery = graphql(`
   query fetchSessions($user_id: String) {
     session(
-      where: { user_id: { _eq: $user_id } }
+      where: {
+        _or: [
+          { user_id: { _eq: $user_id } }
+          { shared_sessions: { user_id: { _eq: $user_id } } }
+        ]
+      }
       order_by: { created_at: desc }
     ) {
       id
       name
       created_at
+      user_id
     }
   }
 `);

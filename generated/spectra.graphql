@@ -1470,6 +1470,19 @@ type mutation_root {
   delete_session_by_pk(id: uuid!): session
 
   """
+  delete data from the table: "shared_sessions"
+  """
+  delete_shared_sessions(
+    """filter the rows which have to be deleted"""
+    where: shared_sessions_bool_exp!
+  ): shared_sessions_mutation_response
+
+  """
+  delete single row from the table: "shared_sessions"
+  """
+  delete_shared_sessions_by_pk(session_id: uuid!, user_id: String!): shared_sessions
+
+  """
   delete data from the table: "user_settings"
   """
   delete_user_settings(
@@ -1481,6 +1494,19 @@ type mutation_root {
   delete single row from the table: "user_settings"
   """
   delete_user_settings_by_pk(payload_threshold_large_kb: Int!): user_settings
+
+  """
+  delete data from the table: "users"
+  """
+  delete_users(
+    """filter the rows which have to be deleted"""
+    where: users_bool_exp!
+  ): users_mutation_response
+
+  """
+  delete single row from the table: "users"
+  """
+  delete_users_by_pk(id: String!): users
 
   """
   insert data into the table: "cpu_metrics"
@@ -1637,6 +1663,28 @@ type mutation_root {
   ): session
 
   """
+  insert data into the table: "shared_sessions"
+  """
+  insert_shared_sessions(
+    """the rows to be inserted"""
+    objects: [shared_sessions_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: shared_sessions_on_conflict
+  ): shared_sessions_mutation_response
+
+  """
+  insert a single row into the table: "shared_sessions"
+  """
+  insert_shared_sessions_one(
+    """the row to be inserted"""
+    object: shared_sessions_insert_input!
+
+    """upsert condition"""
+    on_conflict: shared_sessions_on_conflict
+  ): shared_sessions
+
+  """
   insert data into the table: "user_settings"
   """
   insert_user_settings(
@@ -1657,6 +1705,28 @@ type mutation_root {
     """upsert condition"""
     on_conflict: user_settings_on_conflict
   ): user_settings
+
+  """
+  insert data into the table: "users"
+  """
+  insert_users(
+    """the rows to be inserted"""
+    objects: [users_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: users_on_conflict
+  ): users_mutation_response
+
+  """
+  insert a single row into the table: "users"
+  """
+  insert_users_one(
+    """the row to be inserted"""
+    object: users_insert_input!
+
+    """upsert condition"""
+    on_conflict: users_on_conflict
+  ): users
 
   """
   update data of the table: "cpu_metrics"
@@ -2005,6 +2075,34 @@ type mutation_root {
   ): [session_mutation_response]
 
   """
+  update data of the table: "shared_sessions"
+  """
+  update_shared_sessions(
+    """sets the columns of the filtered rows to the given values"""
+    _set: shared_sessions_set_input
+
+    """filter the rows which have to be updated"""
+    where: shared_sessions_bool_exp!
+  ): shared_sessions_mutation_response
+
+  """
+  update single row of the table: "shared_sessions"
+  """
+  update_shared_sessions_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: shared_sessions_set_input
+    pk_columns: shared_sessions_pk_columns_input!
+  ): shared_sessions
+
+  """
+  update multiples rows of table: "shared_sessions"
+  """
+  update_shared_sessions_many(
+    """updates to execute, in order"""
+    updates: [shared_sessions_updates!]!
+  ): [shared_sessions_mutation_response]
+
+  """
   update data of the table: "user_settings"
   """
   update_user_settings(
@@ -2037,6 +2135,34 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [user_settings_updates!]!
   ): [user_settings_mutation_response]
+
+  """
+  update data of the table: "users"
+  """
+  update_users(
+    """sets the columns of the filtered rows to the given values"""
+    _set: users_set_input
+
+    """filter the rows which have to be updated"""
+    where: users_bool_exp!
+  ): users_mutation_response
+
+  """
+  update single row of the table: "users"
+  """
+  update_users_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: users_set_input
+    pk_columns: users_pk_columns_input!
+  ): users
+
+  """
+  update multiples rows of table: "users"
+  """
+  update_users_many(
+    """updates to execute, in order"""
+    updates: [users_updates!]!
+  ): [users_mutation_response]
 }
 
 """
@@ -2798,6 +2924,49 @@ type query_root {
   session_by_pk(id: uuid!): session
 
   """
+  fetch data from the table: "shared_sessions"
+  """
+  shared_sessions(
+    """distinct select on columns"""
+    distinct_on: [shared_sessions_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [shared_sessions_order_by!]
+
+    """filter the rows returned"""
+    where: shared_sessions_bool_exp
+  ): [shared_sessions!]!
+
+  """
+  fetch aggregated fields from the table: "shared_sessions"
+  """
+  shared_sessions_aggregate(
+    """distinct select on columns"""
+    distinct_on: [shared_sessions_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [shared_sessions_order_by!]
+
+    """filter the rows returned"""
+    where: shared_sessions_bool_exp
+  ): shared_sessions_aggregate!
+
+  """fetch data from the table: "shared_sessions" using primary key columns"""
+  shared_sessions_by_pk(session_id: uuid!, user_id: String!): shared_sessions
+
+  """
   fetch data from the table: "user_settings"
   """
   user_settings(
@@ -2839,6 +3008,49 @@ type query_root {
 
   """fetch data from the table: "user_settings" using primary key columns"""
   user_settings_by_pk(payload_threshold_large_kb: Int!): user_settings
+
+  """
+  fetch data from the table: "users"
+  """
+  users(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): [users!]!
+
+  """
+  fetch aggregated fields from the table: "users"
+  """
+  users_aggregate(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): users_aggregate!
+
+  """fetch data from the table: "users" using primary key columns"""
+  users_by_pk(id: String!): users
 }
 
 """
@@ -2852,6 +3064,46 @@ type session {
     path: String
   ): jsonb
   name: String!
+
+  """
+  fetch data from the table: "shared_sessions"
+  """
+  shared_sessions(
+    """distinct select on columns"""
+    distinct_on: [shared_sessions_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [shared_sessions_order_by!]
+
+    """filter the rows returned"""
+    where: shared_sessions_bool_exp
+  ): [shared_sessions!]!
+
+  """
+  fetch aggregated fields from the table: "shared_sessions"
+  """
+  shared_sessions_aggregate(
+    """distinct select on columns"""
+    distinct_on: [shared_sessions_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [shared_sessions_order_by!]
+
+    """filter the rows returned"""
+    where: shared_sessions_bool_exp
+  ): shared_sessions_aggregate!
   user_id: String!
 }
 
@@ -2888,6 +3140,8 @@ input session_bool_exp {
   id: uuid_comparison_exp
   metadata: jsonb_comparison_exp
   name: String_comparison_exp
+  shared_sessions: shared_sessions_bool_exp
+  shared_sessions_aggregate: shared_sessions_aggregate_bool_exp
   user_id: String_comparison_exp
 }
 
@@ -2930,6 +3184,7 @@ input session_insert_input {
   id: uuid
   metadata: jsonb
   name: String
+  shared_sessions: shared_sessions_arr_rel_insert_input
   user_id: String
 }
 
@@ -2975,6 +3230,7 @@ input session_order_by {
   id: order_by
   metadata: order_by
   name: order_by
+  shared_sessions_aggregate: shared_sessions_aggregate_order_by
   user_id: order_by
 }
 
@@ -3086,6 +3342,237 @@ input session_updates {
 
   """filter the rows which have to be updated"""
   where: session_bool_exp!
+}
+
+"""
+columns and relationships of "shared_sessions"
+"""
+type shared_sessions {
+  from: timestamptz
+  session_id: uuid!
+  to: timestamptz
+  user_id: String!
+}
+
+"""
+aggregated selection of "shared_sessions"
+"""
+type shared_sessions_aggregate {
+  aggregate: shared_sessions_aggregate_fields
+  nodes: [shared_sessions!]!
+}
+
+input shared_sessions_aggregate_bool_exp {
+  count: shared_sessions_aggregate_bool_exp_count
+}
+
+input shared_sessions_aggregate_bool_exp_count {
+  arguments: [shared_sessions_select_column!]
+  distinct: Boolean
+  filter: shared_sessions_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "shared_sessions"
+"""
+type shared_sessions_aggregate_fields {
+  count(columns: [shared_sessions_select_column!], distinct: Boolean): Int!
+  max: shared_sessions_max_fields
+  min: shared_sessions_min_fields
+}
+
+"""
+order by aggregate values of table "shared_sessions"
+"""
+input shared_sessions_aggregate_order_by {
+  count: order_by
+  max: shared_sessions_max_order_by
+  min: shared_sessions_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "shared_sessions"
+"""
+input shared_sessions_arr_rel_insert_input {
+  data: [shared_sessions_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: shared_sessions_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "shared_sessions". All fields are combined with a logical 'AND'.
+"""
+input shared_sessions_bool_exp {
+  _and: [shared_sessions_bool_exp!]
+  _not: shared_sessions_bool_exp
+  _or: [shared_sessions_bool_exp!]
+  from: timestamptz_comparison_exp
+  session_id: uuid_comparison_exp
+  to: timestamptz_comparison_exp
+  user_id: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "shared_sessions"
+"""
+enum shared_sessions_constraint {
+  """
+  unique or primary key constraint on columns "user_id", "session_id"
+  """
+  shared_sessions_pkey
+}
+
+"""
+input type for inserting data into table "shared_sessions"
+"""
+input shared_sessions_insert_input {
+  from: timestamptz
+  session_id: uuid
+  to: timestamptz
+  user_id: String
+}
+
+"""aggregate max on columns"""
+type shared_sessions_max_fields {
+  from: timestamptz
+  session_id: uuid
+  to: timestamptz
+  user_id: String
+}
+
+"""
+order by max() on columns of table "shared_sessions"
+"""
+input shared_sessions_max_order_by {
+  from: order_by
+  session_id: order_by
+  to: order_by
+  user_id: order_by
+}
+
+"""aggregate min on columns"""
+type shared_sessions_min_fields {
+  from: timestamptz
+  session_id: uuid
+  to: timestamptz
+  user_id: String
+}
+
+"""
+order by min() on columns of table "shared_sessions"
+"""
+input shared_sessions_min_order_by {
+  from: order_by
+  session_id: order_by
+  to: order_by
+  user_id: order_by
+}
+
+"""
+response of any mutation on the table "shared_sessions"
+"""
+type shared_sessions_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [shared_sessions!]!
+}
+
+"""
+on_conflict condition type for table "shared_sessions"
+"""
+input shared_sessions_on_conflict {
+  constraint: shared_sessions_constraint!
+  update_columns: [shared_sessions_update_column!]! = []
+  where: shared_sessions_bool_exp
+}
+
+"""Ordering options when selecting data from "shared_sessions"."""
+input shared_sessions_order_by {
+  from: order_by
+  session_id: order_by
+  to: order_by
+  user_id: order_by
+}
+
+"""primary key columns input for table: shared_sessions"""
+input shared_sessions_pk_columns_input {
+  session_id: uuid!
+  user_id: String!
+}
+
+"""
+select columns of table "shared_sessions"
+"""
+enum shared_sessions_select_column {
+  """column name"""
+  from
+
+  """column name"""
+  session_id
+
+  """column name"""
+  to
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "shared_sessions"
+"""
+input shared_sessions_set_input {
+  from: timestamptz
+  session_id: uuid
+  to: timestamptz
+  user_id: String
+}
+
+"""
+Streaming cursor of the table "shared_sessions"
+"""
+input shared_sessions_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: shared_sessions_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input shared_sessions_stream_cursor_value_input {
+  from: timestamptz
+  session_id: uuid
+  to: timestamptz
+  user_id: String
+}
+
+"""
+update columns of table "shared_sessions"
+"""
+enum shared_sessions_update_column {
+  """column name"""
+  from
+
+  """column name"""
+  session_id
+
+  """column name"""
+  to
+
+  """column name"""
+  user_id
+}
+
+input shared_sessions_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: shared_sessions_set_input
+
+  """filter the rows which have to be updated"""
+  where: shared_sessions_bool_exp!
 }
 
 type subscription_root {
@@ -3491,6 +3978,63 @@ type subscription_root {
   ): [session!]!
 
   """
+  fetch data from the table: "shared_sessions"
+  """
+  shared_sessions(
+    """distinct select on columns"""
+    distinct_on: [shared_sessions_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [shared_sessions_order_by!]
+
+    """filter the rows returned"""
+    where: shared_sessions_bool_exp
+  ): [shared_sessions!]!
+
+  """
+  fetch aggregated fields from the table: "shared_sessions"
+  """
+  shared_sessions_aggregate(
+    """distinct select on columns"""
+    distinct_on: [shared_sessions_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [shared_sessions_order_by!]
+
+    """filter the rows returned"""
+    where: shared_sessions_bool_exp
+  ): shared_sessions_aggregate!
+
+  """fetch data from the table: "shared_sessions" using primary key columns"""
+  shared_sessions_by_pk(session_id: uuid!, user_id: String!): shared_sessions
+
+  """
+  fetch data from the table in a streaming manner: "shared_sessions"
+  """
+  shared_sessions_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [shared_sessions_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: shared_sessions_bool_exp
+  ): [shared_sessions!]!
+
+  """
   fetch data from the table: "user_settings"
   """
   user_settings(
@@ -3546,6 +4090,63 @@ type subscription_root {
     """filter the rows returned"""
     where: user_settings_bool_exp
   ): [user_settings!]!
+
+  """
+  fetch data from the table: "users"
+  """
+  users(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): [users!]!
+
+  """
+  fetch aggregated fields from the table: "users"
+  """
+  users_aggregate(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): users_aggregate!
+
+  """fetch data from the table: "users" using primary key columns"""
+  users_by_pk(id: String!): users
+
+  """
+  fetch data from the table in a streaming manner: "users"
+  """
+  users_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [users_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): [users!]!
 }
 
 scalar timestamptz
@@ -3907,6 +4508,158 @@ type user_settings_variance_fields {
   payload_threshold_ok_kb: Float
   request_threshold_bad_ms: Float
   request_threshold_good_ms: Float
+}
+
+"""
+columns and relationships of "users"
+"""
+type users {
+  id: String!
+  username: String!
+}
+
+"""
+aggregated selection of "users"
+"""
+type users_aggregate {
+  aggregate: users_aggregate_fields
+  nodes: [users!]!
+}
+
+"""
+aggregate fields of "users"
+"""
+type users_aggregate_fields {
+  count(columns: [users_select_column!], distinct: Boolean): Int!
+  max: users_max_fields
+  min: users_min_fields
+}
+
+"""
+Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'.
+"""
+input users_bool_exp {
+  _and: [users_bool_exp!]
+  _not: users_bool_exp
+  _or: [users_bool_exp!]
+  id: String_comparison_exp
+  username: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "users"
+"""
+enum users_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  users_pkey
+}
+
+"""
+input type for inserting data into table "users"
+"""
+input users_insert_input {
+  id: String
+  username: String
+}
+
+"""aggregate max on columns"""
+type users_max_fields {
+  id: String
+  username: String
+}
+
+"""aggregate min on columns"""
+type users_min_fields {
+  id: String
+  username: String
+}
+
+"""
+response of any mutation on the table "users"
+"""
+type users_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [users!]!
+}
+
+"""
+on_conflict condition type for table "users"
+"""
+input users_on_conflict {
+  constraint: users_constraint!
+  update_columns: [users_update_column!]! = []
+  where: users_bool_exp
+}
+
+"""Ordering options when selecting data from "users"."""
+input users_order_by {
+  id: order_by
+  username: order_by
+}
+
+"""primary key columns input for table: users"""
+input users_pk_columns_input {
+  id: String!
+}
+
+"""
+select columns of table "users"
+"""
+enum users_select_column {
+  """column name"""
+  id
+
+  """column name"""
+  username
+}
+
+"""
+input type for updating data in table "users"
+"""
+input users_set_input {
+  id: String
+  username: String
+}
+
+"""
+Streaming cursor of the table "users"
+"""
+input users_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: users_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input users_stream_cursor_value_input {
+  id: String
+  username: String
+}
+
+"""
+update columns of table "users"
+"""
+enum users_update_column {
+  """column name"""
+  id
+
+  """column name"""
+  username
+}
+
+input users_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: users_set_input
+
+  """filter the rows which have to be updated"""
+  where: users_bool_exp!
 }
 
 scalar uuid

@@ -28,6 +28,8 @@ const useColumns = (
     mutationFn: deleteSession,
   });
 
+  const { user } = useUser();
+
   return [
     {
       accessorKey: "id",
@@ -63,6 +65,7 @@ const useColumns = (
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuItem
+                  disabled={user?.id !== original.user_id}
                   onClick={(e) => {
                     e.stopPropagation();
                     setSelectedSession(original);
@@ -72,6 +75,7 @@ const useColumns = (
                   Edit
                 </DropdownMenuItem>
                 <DropdownMenuItem
+                  disabled={user?.id !== original.user_id}
                   onClick={(e) => {
                     e.stopPropagation();
                     deleteSessionById(original.id, {
@@ -114,12 +118,6 @@ export const SessionIndex = () => {
             setSelectedSession={setSelectedSession}
           />
         </div>
-
-        {!sessions?.length && (
-          <div className="text-center text-gray-500 text-lg mb-6">
-            No sessions found.
-          </div>
-        )}
 
         <DataTable
           columns={columns}

@@ -1,5 +1,5 @@
 export * from "./queries/fetchSessions.query";
-export * from "./mutations/upsertMutation.mutation";
+export * from "./mutations/upsertSession.mutation";
 export * from "./queries/fetchFps.query";
 export * from "./queries/fetchMicrofrontends.query";
 export * from "./queries/fetchMemoryLogs.query";
@@ -8,3 +8,7 @@ export * from "./queries/fetchUserSettings.query";
 export * from "./mutations/upsertUserSettings.mutation";
 export * from "./mutations/deleteSession.mutation";
 export * from "./mutations/deleteMicrofrontendById.mutation";
+export * from "./mutations/upsertUser.mutation";
+export * from "./queries/fetchUsersSharedSession.query";
+export * from "./mutations/deleteSharedSession.mutation";
+export * from "./mutations/deleteSharedSession.mutation";

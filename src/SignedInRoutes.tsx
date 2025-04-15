@@ -13,6 +13,7 @@ import { SessionDetail } from "./modules/sessions/pages/SessionDetail";
 import { SessionIndex } from "./modules/sessions/pages/SessionIndex";
 import { Toaster } from "sonner";
 import { SettingsIndex } from "./modules/settings/SettingsIndex";
+import { useUpsertUser } from "./useUpserUser";
 
 const links = [
   {
@@ -27,6 +28,7 @@ const links = [
 
 export const SignedInRoutes = () => {
   const { pathname } = useLocation();
+  useUpsertUser();
 
   return (
     <QueryClientProvider client={queryClient}>
