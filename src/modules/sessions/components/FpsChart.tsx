@@ -16,9 +16,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { fetchFps } from "@/api";
 import { differenceInSeconds, parseISO } from "date-fns";
+import { useSubscribeToFps } from "./useSubscribeToFps";
 
 const chartConfig = {
   desktop: {
@@ -34,13 +33,7 @@ const chartConfig = {
 export const FpsChart: React.FC<{
   sessionId: string;
 }> = ({ sessionId }) => {
-  const { data } = useQuery({
-    queryKey: ["fpsChart", sessionId],
-    queryFn: () => fetchFps({ sessionId }),
-    initialData: [],
-    refetchInterval: 3000,
-    placeholderData: keepPreviousData,
-  });
+  const { data } = useSubscribeToFps(sessionId);
 
   return (
     <Card>

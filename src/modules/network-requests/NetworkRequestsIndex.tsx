@@ -8,11 +8,11 @@ export const NetworkRequestsIndex: React.FC<{
   sessionId: string;
   microfrontendId: string;
 }> = observer(({ sessionId, microfrontendId }) => {
-  const { isFetching } = useInitNetworkRequests(sessionId, microfrontendId);
+  useInitNetworkRequests(sessionId, microfrontendId);
 
   return (
     <NetworkRequestsProvider>
-      <NetworkRequestTable isFetching={isFetching} />
+      <NetworkRequestTable />
       <DraggableRequestWidgets />
     </NetworkRequestsProvider>
   );

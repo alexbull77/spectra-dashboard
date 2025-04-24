@@ -1,8 +1,11 @@
 import { processServerError } from "@/helpers/processServerError";
 import { getSpectraClient, graphql, ResultOf } from "../client";
 
-const fetchNetworkRequestsQuery = graphql(`
-  query fetchNetworkRequests($sessionId: uuid!, $microfrontendId: uuid!) {
+const networkRequestSubscription = graphql(`
+  subscription fetchNetworkRequests(
+    $sessionId: uuid!
+    $microfrontendId: uuid!
+  ) {
     network_requests(
       where: {
         _and: [
@@ -27,29 +30,30 @@ const fetchNetworkRequestsQuery = graphql(`
 `);
 
 export type INetworkRequest = ResultOf<
-  typeof fetchNetworkRequestsQuery
+  typeof networkRequestSubscription
 >["network_requests"][0];
 
-export const fetchNetworkRequests = async ({
+export const subscribeToNetworkRequests = async ({
   sessionId,
   microfrontendId,
+  setData,
 }: {
   sessionId: string;
   microfrontendId: string;
-}): Promise<INetworkRequest[]> => {
-  try {
-    const client = await getSpectraClient();
+  setData: (data: INetworkRequest[]) => void;
+}) => {
+  const client = await getSpectraClient();
 
-    const { data, error } = await client.query(fetchNetworkRequestsQuery, {
+  const { unsubscribe } = await client
+    .subscription(networkRequestSubscription, {
       sessionId,
       microfrontendId,
+    })
+    .subscribe(({ data, error }) => {
+      if (error) processServerError(error);
+
+      setData(data?.network_requests || []);
     });
 
-    if (error) processServerError(error);
-
-    return data?.network_requests || [];
-  } catch (e) {
-    processServerError(e);
-    return [];
-  }
+  return unsubscribe;
 };

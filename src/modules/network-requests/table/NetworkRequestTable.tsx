@@ -6,9 +6,7 @@ import { useNetworkRequestsStore } from "../mst/NetworkRequestContext";
 import { observer } from "mobx-react-lite";
 import { Input } from "@/components/ui/input";
 
-export const NetworkRequestTable: React.FC<{
-  isFetching: boolean;
-}> = observer(({ isFetching }) => {
+export const NetworkRequestTable = observer(() => {
   const { onChangeField, filteredRequests, search, settings } =
     useNetworkRequestsStore();
 
@@ -29,7 +27,6 @@ export const NetworkRequestTable: React.FC<{
       <DataTable
         columns={columns}
         data={filteredRequests.slice()}
-        isFetching={isFetching}
         onRowClick={(row) => onChangeField("selected_request", row)}
         cellClassNameOverrides={[
           {

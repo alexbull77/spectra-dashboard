@@ -1,4 +1,4 @@
-import { fetchNetworkRequests } from "@/api";
+import { subscribeToNetworkRequests } from "@/api";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { NetworkRequestsStoreInstance } from "./mst/NetworkRequests.store";
@@ -10,28 +10,30 @@ export const useInitNetworkRequests = (
   sessionId: string,
   microfrontendId: string
 ) => {
-  const { data: fetchedRequests, isFetching: requestsFetching } = useQuery({
-    queryKey: ["fetchNetworkRequests", sessionId, microfrontendId],
-    queryFn: () => fetchNetworkRequests({ sessionId, microfrontendId }),
-    initialData: [],
-  });
-
   useEffect(() => {
-    NetworkRequestsStoreInstance.onChangeField(
-      "requests",
-      cast(fetchedRequests)
-    );
-  }, [fetchedRequests]);
+    let unsubscribe: (() => void) | undefined = undefined;
+
+    subscribeToNetworkRequests({
+      sessionId,
+      microfrontendId,
+      setData: (fetchedRequests) => {
+        NetworkRequestsStoreInstance.onChangeField(
+          "requests",
+          cast(fetchedRequests)
+        );
+      },
+    }).then((_unsubscribe) => (unsubscribe = _unsubscribe));
+
+    return () => {
+      if (unsubscribe) unsubscribe();
+    };
+  }, [sessionId, microfrontendId]);
 
   const { user } = useUser();
-  const { data: settings, isFetching: settingsFetching } = useQuery(
-    settingsQueryOptions.settings(user?.id)
-  );
+  const { data: settings } = useQuery(settingsQueryOptions.settings(user?.id));
 
   useEffect(() => {
     if (!settings) return;
     NetworkRequestsStoreInstance.onChangeField("settings", { ...settings });
   }, [settings]);
-
-  return { isFetching: requestsFetching || settingsFetching };
 };

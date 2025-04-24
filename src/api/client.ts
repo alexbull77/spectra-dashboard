@@ -1,6 +1,13 @@
 import { initGraphQLTada } from "gql.tada";
 import { introspection } from "../../generated/spectra-graphql-env";
-import { Client, ClientOptions, createClient, fetchExchange } from "@urql/core";
+import {
+  Client,
+  ClientOptions,
+  createClient,
+  fetchExchange,
+  subscriptionExchange,
+} from "@urql/core";
+import { createClient as createWSClient } from "graphql-ws";
 
 const initTadaClient = ({
   clientOptions,
@@ -14,7 +21,9 @@ const initTadaClient = ({
   let tadaClient: Client | undefined = undefined;
 
   const getClient = async (): Promise<Client> => {
-    tadaClient = await createTadaClient({ clientOptions });
+    if (!tadaClient) {
+      tadaClient = await createTadaClient({ clientOptions });
+    }
     return tadaClient;
   };
 
@@ -29,8 +38,31 @@ const initTadaClient = ({
       _clientOptions.url = url;
     }
 
+    const wsClient = createWSClient({
+      url: url.replace("http", "ws").replace("https", "wss"),
+      connectionParams: async () => {
+        return {
+          headers: {
+            "x-hasura-admin-secret": secret,
+          },
+        };
+      },
+      lazy: true,
+    });
+
     _clientOptions.exchanges = [
       fetchExchange,
+      subscriptionExchange({
+        forwardSubscription(request) {
+          const input = { ...request, query: request.query || "" };
+          return {
+            subscribe(sink) {
+              const dispose = wsClient.subscribe(input, sink);
+              return { unsubscribe: dispose };
+            },
+          };
+        },
+      }),
       ...(_clientOptions.exchanges || []),
     ];
 

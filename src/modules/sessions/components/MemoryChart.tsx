@@ -7,9 +7,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { fetchMemoryLogs } from "@/api";
 import { differenceInSeconds, parseISO } from "date-fns";
+import { useSubscribeToMemoryLogs } from "./useSubscribeToMemoryLogs";
 
 const chartConfig = {
   desktop: {
@@ -23,13 +22,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export const MemoryChart: React.FC<{ sessionId: string }> = ({ sessionId }) => {
-  const { data } = useQuery({
-    queryKey: ["memoryChart", sessionId],
-    queryFn: () => fetchMemoryLogs({ sessionId }),
-    initialData: [],
-    refetchInterval: 3000,
-    placeholderData: keepPreviousData,
-  });
+  const { data } = useSubscribeToMemoryLogs(sessionId);
 
   return (
     <Card>
