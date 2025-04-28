@@ -12,6 +12,8 @@ export const SettingsIndex = () => {
   const [badRequestThreshold, setBadRequestThreshold] = useState<number>(0);
   const [goodRequestThreshold, setGoodRequestThreshold] = useState<number>(0);
   const [badPayloadThreshold, setBadPayloadThreshold] = useState<number>(0);
+  const [goodEventLoopDuration, setGoodEventLoopDuration] = useState<number>(0);
+  const [badEventLoopDuration, setBadEventLoopDuration] = useState<number>(0);
   const [goodPayloadThreshold, setGoodPayloadThreshold] = useState<number>(0);
   const [chartRangeMinutes, setChartRangeMinutes] = useState<number>(0);
   const [repetitionIntervalSeconds, setRepetitionIntervalSeconds] =
@@ -33,6 +35,8 @@ export const SettingsIndex = () => {
         request_threshold_bad_ms: badRequestThreshold,
         request_threshold_good_ms: goodRequestThreshold,
         allowed_repetition_interval_seconds: repetitionIntervalSeconds,
+        event_loop_delay_bad_ms: badEventLoopDuration,
+        event_loop_delay_good_ms: goodEventLoopDuration,
       }),
     onSuccess: () => toast("Settings successfully saved"),
   });
@@ -43,6 +47,8 @@ export const SettingsIndex = () => {
     setBadPayloadThreshold(settings?.payload_threshold_large_kb || 0);
     setGoodPayloadThreshold(settings?.payload_threshold_ok_kb || 0);
     setChartRangeMinutes(settings?.default_time_range_minutes || 0);
+    setGoodEventLoopDuration(settings?.event_loop_delay_good_ms || 0);
+    setBadEventLoopDuration(settings?.event_loop_delay_bad_ms || 0);
   }, [settings]);
 
   return (
@@ -133,6 +139,34 @@ export const SettingsIndex = () => {
               type="number"
               onChange={(e) => setRepetitionIntervalSeconds(+e.target.value)}
             />
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-y-2">
+          <div className="font-semibold">Event loop event duration (ms)</div>
+          <div className="flex items-center gap-4 flex-wrap">
+            <div className="flex flex-col gap-y-2">
+              <Label htmlFor="badEventLoopDuration">Bad</Label>
+              <Input
+                disabled={isPending || isFetching}
+                className="w-fit"
+                id="badEventLoopDuration"
+                value={badEventLoopDuration}
+                type="number"
+                onChange={(e) => setBadEventLoopDuration(+e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col gap-y-2">
+              <Label htmlFor="goodEventLoopDuration">Good</Label>
+              <Input
+                disabled={isPending || isFetching}
+                className="w-fit"
+                id="goodEventLoopDuration"
+                value={goodEventLoopDuration}
+                type="number"
+                onChange={(e) => setGoodEventLoopDuration(+e.target.value)}
+              />
+            </div>
           </div>
         </div>
 

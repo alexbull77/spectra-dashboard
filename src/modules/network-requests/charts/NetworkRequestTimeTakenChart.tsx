@@ -47,7 +47,7 @@ export const NetworkRequestTimeTakenChart = observer(() => {
     <div className="w-[700px]">
       <Card>
         <CardHeader>
-          <CardTitle>Repeated requests</CardTitle>
+          <CardTitle>Time taken</CardTitle>
         </CardHeader>
         <CardContent>
           <ChartContainer config={chartConfig}>
@@ -69,7 +69,7 @@ export const NetworkRequestTimeTakenChart = observer(() => {
                 tickMargin={8}
                 label={"Seconds from now"}
                 tickFormatter={(value) => {
-                  return `-${differenceInSeconds(new Date(), parseISO(value))}`;
+                  return `${differenceInSeconds(new Date(), parseISO(value))}`;
                 }}
               />
 

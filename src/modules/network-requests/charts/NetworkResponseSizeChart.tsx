@@ -71,7 +71,7 @@ export const NetworkResponseSizeChart = observer(() => {
                 tickMargin={8}
                 label={"Seconds from now"}
                 tickFormatter={(value) => {
-                  return `-${differenceInSeconds(new Date(), parseISO(value))}`;
+                  return `${differenceInSeconds(new Date(), parseISO(value))}`;
                 }}
               />
 
@@ -105,7 +105,7 @@ export const NetworkResponseSizeChart = observer(() => {
                   stroke={bad}
                   strokeDasharray="3 3"
                   label={{
-                    value: "Bad Payload Threshold",
+                    value: "Bad",
                     position: "insideTopRight",
                     fontSize: 14,
                   }}
@@ -119,7 +119,7 @@ export const NetworkResponseSizeChart = observer(() => {
                   strokeWidth={4}
                   strokeDasharray="3 3"
                   label={{
-                    value: "Good Payload Threshold",
+                    value: "Good",
                     position: "insideTopRight",
                     fontSize: 14,
                   }}

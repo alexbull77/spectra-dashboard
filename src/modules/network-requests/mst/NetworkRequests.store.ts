@@ -1,6 +1,7 @@
 import { types } from "mobx-state-tree";
 import { interpolateRainbow } from "d3-scale-chromatic";
 import { bad, good, neutral } from "@/helpers/colors";
+import { IEventLoopLog } from "../../../api/subscriptions/subscribeToEventLoopLogs.subscription";
 
 export const NetworkRequest = types.model({
   id: types.identifier,
@@ -22,6 +23,8 @@ export const UserSettings = types.model({
   request_threshold_bad_ms: types.maybeNull(types.number),
   request_threshold_good_ms: types.maybeNull(types.number),
   allowed_repetition_interval_seconds: types.maybeNull(types.number),
+  event_loop_delay_bad_ms: types.maybeNull(types.number),
+  event_loop_delay_good_ms: types.maybeNull(types.number),
 });
 
 export const NetworkRequestsStore = types
@@ -188,6 +191,27 @@ export const NetworkRequestsStore = types
           fill,
         };
       });
+    },
+
+    getEventLoopLogsChartData(logs: IEventLoopLog[]) {
+      const chartData = logs.map((event) => {
+        let fill = neutral;
+
+        const badDuration =
+          self.settings?.event_loop_delay_bad_ms &&
+          event.duration_ms > self.settings.event_loop_delay_bad_ms;
+
+        const goodDuration =
+          self.settings?.event_loop_delay_good_ms &&
+          event.duration_ms < self.settings.event_loop_delay_good_ms;
+
+        if (badDuration) fill = bad;
+        if (goodDuration) fill = good;
+
+        return { ...event, fill };
+      });
+
+      return chartData;
     },
   }))
   .actions((self) => ({

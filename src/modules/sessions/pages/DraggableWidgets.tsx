@@ -12,12 +12,14 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
-import { FpsChart } from "../components/FpsChart";
-import { MemoryChart } from "../components/MemoryChart";
+import { FpsChart } from "../components/fps/FpsChart";
+import { MemoryChart } from "../components/memory/MemoryChart";
+import { EventLoopChart } from "../components/event-loop/EventLoopLogsChart";
 
 const chartMap: Record<string, React.FC<{ sessionId: string }>> = {
   fps: FpsChart,
   memory: MemoryChart,
+  event_loop: EventLoopChart,
 };
 
 export const DraggableWidgets: React.FC<{ sessionId: string }> = ({
@@ -26,6 +28,7 @@ export const DraggableWidgets: React.FC<{ sessionId: string }> = ({
   const [chartOrder, setChartOrder] = useState<UniqueIdentifier[]>([
     "fps",
     "memory",
+    "event_loop",
   ]);
 
   const handleDragEnd = ({ active, over }: DragEndEvent) => {

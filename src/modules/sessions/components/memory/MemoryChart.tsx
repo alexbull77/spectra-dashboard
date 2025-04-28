@@ -1,4 +1,4 @@
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, YAxis } from "recharts";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -7,7 +7,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { differenceInSeconds, parseISO } from "date-fns";
 import { useSubscribeToMemoryLogs } from "./useSubscribeToMemoryLogs";
 
 const chartConfig = {
@@ -40,17 +39,7 @@ export const MemoryChart: React.FC<{ sessionId: string }> = ({ sessionId }) => {
             }}
           >
             <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="recorded_at"
-              tickLine={false}
-              dy={20}
-              axisLine={false}
-              tickMargin={8}
-              label={"Seconds from now"}
-              tickFormatter={(value) => {
-                return `-${differenceInSeconds(new Date(), parseISO(value))}`;
-              }}
-            />
+
             <YAxis
               dataKey="heap_limit"
               tickLine={false}

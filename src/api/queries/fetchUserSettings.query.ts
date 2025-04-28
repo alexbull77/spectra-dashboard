@@ -12,6 +12,8 @@ const fetchUserSettingsQuery = graphql(`
       request_threshold_bad_ms
       request_threshold_good_ms
       allowed_repetition_interval_seconds
+      event_loop_delay_bad_ms
+      event_loop_delay_good_ms
     }
   }
 `);

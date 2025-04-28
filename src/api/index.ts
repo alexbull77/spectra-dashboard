@@ -12,3 +12,4 @@ export * from "./queries/fetchUsersSharedSession.query";
 export * from "./mutations/deleteSharedSession.mutation";
 export * from "./mutations/deleteSharedSession.mutation";
 export * from "./subscriptions/subscribeToNetworkRequest.subscription";
+export * from "./subscriptions/subscribeToEventLoopLogs.subscription";

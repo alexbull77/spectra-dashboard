@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  CartesianGrid,
-  LabelList,
-  Line,
-  LineChart,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { CartesianGrid, LabelList, Line, LineChart, YAxis } from "recharts";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -16,7 +9,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { differenceInSeconds, parseISO } from "date-fns";
 import { useSubscribeToFps } from "./useSubscribeToFps";
 
 const chartConfig = {
@@ -51,17 +43,6 @@ export const FpsChart: React.FC<{
             }}
           >
             <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="recorded_at"
-              tickLine={false}
-              dy={20}
-              axisLine={false}
-              tickMargin={8}
-              label={"Seconds from now"}
-              tickFormatter={(value) => {
-                return `-${differenceInSeconds(new Date(), parseISO(value))}`;
-              }}
-            />
 
             <YAxis
               dataKey="fps"

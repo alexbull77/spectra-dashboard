@@ -1,4 +1,3 @@
-import { NetworkRequestsProvider } from "./mst/NetworkRequestContext";
 import { NetworkRequestTable } from "./table/NetworkRequestTable";
 import { observer } from "mobx-react-lite";
 import { useInitNetworkRequests } from "./useInitNetworkRequests";
@@ -11,9 +10,9 @@ export const NetworkRequestsIndex: React.FC<{
   useInitNetworkRequests(sessionId, microfrontendId);
 
   return (
-    <NetworkRequestsProvider>
+    <>
       <NetworkRequestTable />
       <DraggableRequestWidgets />
-    </NetworkRequestsProvider>
+    </>
   );
 });
