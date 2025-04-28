@@ -107,7 +107,7 @@ export const SessionIndex = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-screen h-[calc(100vh-40px)] p-8 bg-gray-50 text-gray-800">
+    <div className="w-screen h-[calc(100vh-50px)] p-8 bg-gray-50 text-gray-800">
       <div className="max-w-3xl mx-auto">
         <div className="flex justify-between">
           <h1 className="text-3xl font-bold mb-6">Sessions</h1>

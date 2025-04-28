@@ -7,6 +7,8 @@ import { settingsQueryOptions } from "./settingsQueryOptions";
 import { useUser } from "@clerk/clerk-react";
 import { upsertUserSettings } from "@/api";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
 export const SettingsIndex = () => {
   const [badRequestThreshold, setBadRequestThreshold] = useState<number>(0);
@@ -51,9 +53,17 @@ export const SettingsIndex = () => {
     setBadEventLoopDuration(settings?.event_loop_delay_bad_ms || 0);
   }, [settings]);
 
+  const navigate = useNavigate();
+
   return (
-    <div className="flex items-center justify-center px-4 w-screen">
-      <div className="w-full h-[calc(100vh-40px)] flex flex-col gap-y-8 max-w-[600px] border-x border-gray-200 pt-8 px-4">
+    <div className="relative flex items-center justify-center px-4 w-screen">
+      <div className="absolute top-4 left-4">
+        <Button variant="outline" onClick={() => navigate(-1)}>
+          <ArrowLeft />
+          <span>Back</span>
+        </Button>
+      </div>
+      <div className="w-full h-[calc(100vh-50px)] flex flex-col gap-y-8 max-w-[600px] border-x border-gray-200 pt-8 px-4">
         <div className="font-semibold text-2xl">Settings</div>
 
         <div className="flex flex-col gap-y-2">

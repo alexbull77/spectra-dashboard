@@ -36,7 +36,7 @@ export const RepeatedNetworkRequestsChart = observer(() => {
   const chartConfig = generateChartConfig(repeatedRequestsByPayload);
 
   return (
-    <div className="w-[700px]">
+    <div>
       <Card>
         <CardHeader>
           <CardTitle>Repeated requests</CardTitle>
@@ -81,8 +81,8 @@ export const RepeatedNetworkRequestsChart = observer(() => {
               />
               <Bar
                 onClick={(data) => {
-                  navigator.clipboard.writeText(data.payload.id);
-                  toast("Request id copied to clipboard");
+                  navigator.clipboard.writeText(data?.request_ids?.[0]);
+                  toast("First request id copied to clipboard");
                 }}
                 dataKey="count"
                 type="natural"

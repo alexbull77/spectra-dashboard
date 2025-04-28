@@ -46,21 +46,23 @@ export const SessionDetail = () => {
 
   return (
     <NetworkRequestsProvider>
-      <div className="flex flex-col p-8 w-screen h-[calc(100vh-40px)] gap-y-8">
-        <div className="flex gap-x-2">
+      <div className="flex flex-col p-8 w-screen min-h-[calc(100vh-50px)] gap-y-8">
+        <div className="flex gap-x-4 items-center">
           <Button variant="outline" onClick={() => navigate(-1)}>
             <ArrowLeft />
             <span>Back</span>
           </Button>
-          <h2 className="text-2xl font-bold mb-4">Session: </h2>
-          <h2 className="text-2xl mb-4 text-gray-700">{sessionId}</h2>
+          <h2 className="text-2xl font-bold">Session: </h2>
+          <h2 className="text-2xl text-gray-700">{sessionId}</h2>
           <ShareSessionDialog sessionId={sessionId} disabled={!isOwner} />
         </div>
 
+        <DraggableWidgets sessionId={sessionId} />
+
         {!microfrontends.length && !isFetching ? (
           <div className="text-center text-gray-500 text-lg mb-6">
-            No microfrontends found. Please some using Session ID provided to
-            see an overview.
+            No microfrontends detected. Please use provided session ID to track
+            some.
           </div>
         ) : (
           <Tabs
@@ -104,7 +106,6 @@ export const SessionDetail = () => {
             ))}
           </Tabs>
         )}
-        <DraggableWidgets sessionId={sessionId} />
       </div>
     </NetworkRequestsProvider>
   );

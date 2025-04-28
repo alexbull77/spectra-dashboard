@@ -11,8 +11,8 @@ export const NetworkRequestsIndex: React.FC<{
 
   return (
     <>
-      <NetworkRequestTable />
       <DraggableRequestWidgets />
+      <NetworkRequestTable />
     </>
   );
 });

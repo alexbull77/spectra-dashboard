@@ -88,7 +88,7 @@ const SortableItem: React.FC<{
     transform: CSS.Transform.toString(transform),
     transition,
     cursor: "grab",
-    width: 750,
+    width: 460,
     boxShadow: isOver
       ? "0 0 12px 4px rgba(0, 153, 255, 0.75)" // Glowing blue effect
       : undefined,

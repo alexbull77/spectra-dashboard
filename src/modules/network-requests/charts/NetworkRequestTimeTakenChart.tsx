@@ -44,7 +44,7 @@ export const NetworkRequestTimeTakenChart = observer(() => {
   const chartConfig = generateChartConfig(requestsTimeTaken);
 
   return (
-    <div className="w-[700px]">
+    <div>
       <Card>
         <CardHeader>
           <CardTitle>Time taken</CardTitle>
@@ -103,7 +103,7 @@ export const NetworkRequestTimeTakenChart = observer(() => {
                   stroke={bad}
                   strokeDasharray="3 3"
                   label={{
-                    value: "Bad Request Threshold",
+                    value: "Bad",
                     position: "insideTopRight",
                     fontSize: 14,
                   }}
@@ -117,7 +117,7 @@ export const NetworkRequestTimeTakenChart = observer(() => {
                   strokeWidth={4}
                   strokeDasharray="3 3"
                   label={{
-                    value: "Good Request Threshold",
+                    value: "Good",
                     position: "insideTopRight",
                     fontSize: 14,
                   }}

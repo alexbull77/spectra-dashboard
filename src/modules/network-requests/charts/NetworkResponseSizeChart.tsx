@@ -44,7 +44,7 @@ export const NetworkResponseSizeChart = observer(() => {
   const chartConfig = generateChartConfig(responseSize);
 
   return (
-    <div className="w-[700px]">
+    <div>
       <Card>
         <CardHeader>
           <CardTitle>Payload size</CardTitle>

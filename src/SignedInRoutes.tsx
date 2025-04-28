@@ -4,7 +4,6 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  BreadcrumbList,
   BreadcrumbPage,
 } from "./components/ui/breadcrumb";
 import { UserButton } from "@clerk/clerk-react";
@@ -32,21 +31,26 @@ export const SignedInRoutes = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex items-center justify-end p-2 gap-x-4 w-screen top-0 h-10 border-b border-gray-200 shadow-gray-500 bg-gray-50">
+      <div className="flex items-center justify-end p-2 gap-x-4 w-screen top-0 h-[50px] border-b border-gray-200 shadow-gray-500 bg-gray-50">
         <Breadcrumb>
-          <BreadcrumbList className="gap-x-4">
+          <div className="flex items-center gap-8 px-8">
             {links.map(({ href, label }, index) => (
-              <BreadcrumbItem key={index}>
+              <BreadcrumbItem key={index} className="flex items-center">
                 {pathname === href ? (
-                  <BreadcrumbPage>{label}</BreadcrumbPage>
+                  <BreadcrumbPage className="font-semibold text-gray-800">
+                    {label}
+                  </BreadcrumbPage>
                 ) : (
-                  <BreadcrumbLink href={href} className="underline">
+                  <BreadcrumbLink
+                    href={href}
+                    className="transition-colors hover:text-gray-600 underline-offset-4 hover:underline"
+                  >
                     {label}
                   </BreadcrumbLink>
                 )}
               </BreadcrumbItem>
             ))}
-          </BreadcrumbList>
+          </div>
         </Breadcrumb>
         <UserButton />
       </div>

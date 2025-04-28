@@ -42,7 +42,7 @@ export const EventLoopChart: React.FC<{ sessionId: string }> = observer(
     const chartConfig = generateChartConfig(chartData);
 
     return (
-      <div className="w-[700px]">
+      <div>
         <Card>
           <CardHeader>
             <CardTitle>Event loop events</CardTitle>

@@ -35,17 +35,14 @@ export const NetworkRequestUrlHeatmap = observer(() => {
   const chartConfig = generateChartConfig(urlHeatmap);
 
   return (
-    <div className="w-[700px]">
+    <div>
       <Card>
         <CardHeader>
           <CardTitle>Endpoint Heatmap</CardTitle>
         </CardHeader>
         <CardContent className="flex-1 pb-0">
-          <ChartContainer
-            config={chartConfig}
-            className="mx-auto aspect-square h-[350px]"
-          >
-            <PieChart width={350} height={350}>
+          <ChartContainer config={chartConfig}>
+            <PieChart>
               <ChartTooltip
                 cursor={false}
                 content={<ChartTooltipContent hideLabel />}
