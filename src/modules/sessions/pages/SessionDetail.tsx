@@ -14,6 +14,8 @@ import { ShareSessionDialog } from "../components/ShareSessionDialog";
 import { sessionQueryOptions } from "../sessionQueryOptions";
 import { useUser } from "@clerk/clerk-react";
 import { NetworkRequestsProvider } from "@/modules/network-requests/mst/NetworkRequestContext";
+import { LocalStorageWidget } from "../components/local-storage/LocalStorageWidget";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const SessionDetail = () => {
   const { sessionId } = useParams();
@@ -47,7 +49,7 @@ export const SessionDetail = () => {
   return (
     <NetworkRequestsProvider>
       <div className="flex flex-col p-8 w-screen min-h-[calc(100vh-50px)] gap-y-8">
-        <div className="flex gap-x-4 items-center">
+        <div className="flex gap-4 items-center flex-wrap">
           <Button variant="outline" onClick={() => navigate(-1)}>
             <ArrowLeft />
             <span>Back</span>
@@ -58,54 +60,62 @@ export const SessionDetail = () => {
         </div>
 
         <DraggableWidgets sessionId={sessionId} />
+        <LocalStorageWidget sessionId={sessionId} />
 
-        {!microfrontends.length && !isFetching ? (
-          <div className="text-center text-gray-500 text-lg mb-6">
-            No microfrontends detected. Please use provided session ID to track
-            some.
-          </div>
-        ) : (
-          <Tabs
-            value={selectedMicrofrontendId}
-            className="border border-gray-300 rounded-xl p-4 shadow-xl"
-          >
-            <TabsList className="w-full border border-gray-300">
-              {microfrontends.map(({ id, name, version }) => (
-                <div className="w-full flex items-center" key={id}>
-                  <TabsTrigger
-                    key={id}
-                    value={id}
-                    onClick={() => setSelectedMicrofrontendId(id)}
-                  >
-                    <span>{`${name} (${version})`}</span>
-                  </TabsTrigger>
-                  <Button
-                    disabled={!isOwner}
-                    variant="ghost"
-                    size="icon"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      deleteMf(id, {
-                        onSuccess: () =>
-                          toast("Microfrontend successfully deleted"),
-                      });
-                    }}
-                  >
-                    <Trash className="text-red-500" />
-                  </Button>
-                </div>
-              ))}
-            </TabsList>
-            {microfrontends.map(({ id }) => (
-              <TabsContent value={id} key={id}>
-                <MicrofrontendDashboard
-                  microfrontendId={id}
-                  sessionId={sessionId}
-                />
-              </TabsContent>
-            ))}
-          </Tabs>
-        )}
+        <Card>
+          <CardHeader>
+            <CardTitle>Network Requests</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {!microfrontends.length && !isFetching ? (
+              <div className="text-center text-gray-500 text-lg mb-6">
+                No microfrontends detected. Please use provided session ID to
+                track some.
+              </div>
+            ) : (
+              <Tabs
+                value={selectedMicrofrontendId}
+                className="border border-gray-300 rounded-xl p-4 shadow-xl"
+              >
+                <TabsList className="w-full border border-gray-300">
+                  {microfrontends.map(({ id, name, version }) => (
+                    <div className="w-full flex items-center" key={id}>
+                      <TabsTrigger
+                        key={id}
+                        value={id}
+                        onClick={() => setSelectedMicrofrontendId(id)}
+                      >
+                        <span>{`${name} (${version})`}</span>
+                      </TabsTrigger>
+                      <Button
+                        disabled={!isOwner}
+                        variant="ghost"
+                        size="icon"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteMf(id, {
+                            onSuccess: () =>
+                              toast("Microfrontend successfully deleted"),
+                          });
+                        }}
+                      >
+                        <Trash className="text-red-500" />
+                      </Button>
+                    </div>
+                  ))}
+                </TabsList>
+                {microfrontends.map(({ id }) => (
+                  <TabsContent value={id} key={id}>
+                    <MicrofrontendDashboard
+                      microfrontendId={id}
+                      sessionId={sessionId}
+                    />
+                  </TabsContent>
+                ))}
+              </Tabs>
+            )}
+          </CardContent>
+        </Card>
       </div>
     </NetworkRequestsProvider>
   );

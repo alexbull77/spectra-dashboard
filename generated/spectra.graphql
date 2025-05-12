@@ -1146,6 +1146,396 @@ input jsonb_comparison_exp {
 }
 
 """
+columns and relationships of "local_storage_metrics"
+"""
+type local_storage_metrics {
+  average_entry_size_kb: Float!
+  id: uuid!
+  largest_key: String!
+  largest_key_size_kb: Float!
+  quota_used_percentage: Float!
+  read_ops: Int!
+  recorded_at: timestamptz!
+  session_id: uuid!
+  total_keys: Int!
+  total_size_kb: Float!
+  write_ops: Int!
+}
+
+"""
+aggregated selection of "local_storage_metrics"
+"""
+type local_storage_metrics_aggregate {
+  aggregate: local_storage_metrics_aggregate_fields
+  nodes: [local_storage_metrics!]!
+}
+
+"""
+aggregate fields of "local_storage_metrics"
+"""
+type local_storage_metrics_aggregate_fields {
+  avg: local_storage_metrics_avg_fields
+  count(columns: [local_storage_metrics_select_column!], distinct: Boolean): Int!
+  max: local_storage_metrics_max_fields
+  min: local_storage_metrics_min_fields
+  stddev: local_storage_metrics_stddev_fields
+  stddev_pop: local_storage_metrics_stddev_pop_fields
+  stddev_samp: local_storage_metrics_stddev_samp_fields
+  sum: local_storage_metrics_sum_fields
+  var_pop: local_storage_metrics_var_pop_fields
+  var_samp: local_storage_metrics_var_samp_fields
+  variance: local_storage_metrics_variance_fields
+}
+
+"""aggregate avg on columns"""
+type local_storage_metrics_avg_fields {
+  average_entry_size_kb: Float
+  largest_key_size_kb: Float
+  quota_used_percentage: Float
+  read_ops: Float
+  total_keys: Float
+  total_size_kb: Float
+  write_ops: Float
+}
+
+"""
+Boolean expression to filter rows from the table "local_storage_metrics". All fields are combined with a logical 'AND'.
+"""
+input local_storage_metrics_bool_exp {
+  _and: [local_storage_metrics_bool_exp!]
+  _not: local_storage_metrics_bool_exp
+  _or: [local_storage_metrics_bool_exp!]
+  average_entry_size_kb: Float_comparison_exp
+  id: uuid_comparison_exp
+  largest_key: String_comparison_exp
+  largest_key_size_kb: Float_comparison_exp
+  quota_used_percentage: Float_comparison_exp
+  read_ops: Int_comparison_exp
+  recorded_at: timestamptz_comparison_exp
+  session_id: uuid_comparison_exp
+  total_keys: Int_comparison_exp
+  total_size_kb: Float_comparison_exp
+  write_ops: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "local_storage_metrics"
+"""
+enum local_storage_metrics_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  local_storage_metrics_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "local_storage_metrics"
+"""
+input local_storage_metrics_inc_input {
+  average_entry_size_kb: Float
+  largest_key_size_kb: Float
+  quota_used_percentage: Float
+  read_ops: Int
+  total_keys: Int
+  total_size_kb: Float
+  write_ops: Int
+}
+
+"""
+input type for inserting data into table "local_storage_metrics"
+"""
+input local_storage_metrics_insert_input {
+  average_entry_size_kb: Float
+  id: uuid
+  largest_key: String
+  largest_key_size_kb: Float
+  quota_used_percentage: Float
+  read_ops: Int
+  recorded_at: timestamptz
+  session_id: uuid
+  total_keys: Int
+  total_size_kb: Float
+  write_ops: Int
+}
+
+"""aggregate max on columns"""
+type local_storage_metrics_max_fields {
+  average_entry_size_kb: Float
+  id: uuid
+  largest_key: String
+  largest_key_size_kb: Float
+  quota_used_percentage: Float
+  read_ops: Int
+  recorded_at: timestamptz
+  session_id: uuid
+  total_keys: Int
+  total_size_kb: Float
+  write_ops: Int
+}
+
+"""aggregate min on columns"""
+type local_storage_metrics_min_fields {
+  average_entry_size_kb: Float
+  id: uuid
+  largest_key: String
+  largest_key_size_kb: Float
+  quota_used_percentage: Float
+  read_ops: Int
+  recorded_at: timestamptz
+  session_id: uuid
+  total_keys: Int
+  total_size_kb: Float
+  write_ops: Int
+}
+
+"""
+response of any mutation on the table "local_storage_metrics"
+"""
+type local_storage_metrics_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [local_storage_metrics!]!
+}
+
+"""
+on_conflict condition type for table "local_storage_metrics"
+"""
+input local_storage_metrics_on_conflict {
+  constraint: local_storage_metrics_constraint!
+  update_columns: [local_storage_metrics_update_column!]! = []
+  where: local_storage_metrics_bool_exp
+}
+
+"""Ordering options when selecting data from "local_storage_metrics"."""
+input local_storage_metrics_order_by {
+  average_entry_size_kb: order_by
+  id: order_by
+  largest_key: order_by
+  largest_key_size_kb: order_by
+  quota_used_percentage: order_by
+  read_ops: order_by
+  recorded_at: order_by
+  session_id: order_by
+  total_keys: order_by
+  total_size_kb: order_by
+  write_ops: order_by
+}
+
+"""primary key columns input for table: local_storage_metrics"""
+input local_storage_metrics_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "local_storage_metrics"
+"""
+enum local_storage_metrics_select_column {
+  """column name"""
+  average_entry_size_kb
+
+  """column name"""
+  id
+
+  """column name"""
+  largest_key
+
+  """column name"""
+  largest_key_size_kb
+
+  """column name"""
+  quota_used_percentage
+
+  """column name"""
+  read_ops
+
+  """column name"""
+  recorded_at
+
+  """column name"""
+  session_id
+
+  """column name"""
+  total_keys
+
+  """column name"""
+  total_size_kb
+
+  """column name"""
+  write_ops
+}
+
+"""
+input type for updating data in table "local_storage_metrics"
+"""
+input local_storage_metrics_set_input {
+  average_entry_size_kb: Float
+  id: uuid
+  largest_key: String
+  largest_key_size_kb: Float
+  quota_used_percentage: Float
+  read_ops: Int
+  recorded_at: timestamptz
+  session_id: uuid
+  total_keys: Int
+  total_size_kb: Float
+  write_ops: Int
+}
+
+"""aggregate stddev on columns"""
+type local_storage_metrics_stddev_fields {
+  average_entry_size_kb: Float
+  largest_key_size_kb: Float
+  quota_used_percentage: Float
+  read_ops: Float
+  total_keys: Float
+  total_size_kb: Float
+  write_ops: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type local_storage_metrics_stddev_pop_fields {
+  average_entry_size_kb: Float
+  largest_key_size_kb: Float
+  quota_used_percentage: Float
+  read_ops: Float
+  total_keys: Float
+  total_size_kb: Float
+  write_ops: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type local_storage_metrics_stddev_samp_fields {
+  average_entry_size_kb: Float
+  largest_key_size_kb: Float
+  quota_used_percentage: Float
+  read_ops: Float
+  total_keys: Float
+  total_size_kb: Float
+  write_ops: Float
+}
+
+"""
+Streaming cursor of the table "local_storage_metrics"
+"""
+input local_storage_metrics_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: local_storage_metrics_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input local_storage_metrics_stream_cursor_value_input {
+  average_entry_size_kb: Float
+  id: uuid
+  largest_key: String
+  largest_key_size_kb: Float
+  quota_used_percentage: Float
+  read_ops: Int
+  recorded_at: timestamptz
+  session_id: uuid
+  total_keys: Int
+  total_size_kb: Float
+  write_ops: Int
+}
+
+"""aggregate sum on columns"""
+type local_storage_metrics_sum_fields {
+  average_entry_size_kb: Float
+  largest_key_size_kb: Float
+  quota_used_percentage: Float
+  read_ops: Int
+  total_keys: Int
+  total_size_kb: Float
+  write_ops: Int
+}
+
+"""
+update columns of table "local_storage_metrics"
+"""
+enum local_storage_metrics_update_column {
+  """column name"""
+  average_entry_size_kb
+
+  """column name"""
+  id
+
+  """column name"""
+  largest_key
+
+  """column name"""
+  largest_key_size_kb
+
+  """column name"""
+  quota_used_percentage
+
+  """column name"""
+  read_ops
+
+  """column name"""
+  recorded_at
+
+  """column name"""
+  session_id
+
+  """column name"""
+  total_keys
+
+  """column name"""
+  total_size_kb
+
+  """column name"""
+  write_ops
+}
+
+input local_storage_metrics_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: local_storage_metrics_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: local_storage_metrics_set_input
+
+  """filter the rows which have to be updated"""
+  where: local_storage_metrics_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type local_storage_metrics_var_pop_fields {
+  average_entry_size_kb: Float
+  largest_key_size_kb: Float
+  quota_used_percentage: Float
+  read_ops: Float
+  total_keys: Float
+  total_size_kb: Float
+  write_ops: Float
+}
+
+"""aggregate var_samp on columns"""
+type local_storage_metrics_var_samp_fields {
+  average_entry_size_kb: Float
+  largest_key_size_kb: Float
+  quota_used_percentage: Float
+  read_ops: Float
+  total_keys: Float
+  total_size_kb: Float
+  write_ops: Float
+}
+
+"""aggregate variance on columns"""
+type local_storage_metrics_variance_fields {
+  average_entry_size_kb: Float
+  largest_key_size_kb: Float
+  quota_used_percentage: Float
+  read_ops: Float
+  total_keys: Float
+  total_size_kb: Float
+  write_ops: Float
+}
+
+"""
 columns and relationships of "memory_logs"
 """
 type memory_logs {
@@ -1683,6 +2073,19 @@ type mutation_root {
   delete_fps_logs_by_pk(id: uuid!): fps_logs
 
   """
+  delete data from the table: "local_storage_metrics"
+  """
+  delete_local_storage_metrics(
+    """filter the rows which have to be deleted"""
+    where: local_storage_metrics_bool_exp!
+  ): local_storage_metrics_mutation_response
+
+  """
+  delete single row from the table: "local_storage_metrics"
+  """
+  delete_local_storage_metrics_by_pk(id: uuid!): local_storage_metrics
+
+  """
   delete data from the table: "memory_logs"
   """
   delete_memory_logs(
@@ -1860,6 +2263,28 @@ type mutation_root {
     """upsert condition"""
     on_conflict: fps_logs_on_conflict
   ): fps_logs
+
+  """
+  insert data into the table: "local_storage_metrics"
+  """
+  insert_local_storage_metrics(
+    """the rows to be inserted"""
+    objects: [local_storage_metrics_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: local_storage_metrics_on_conflict
+  ): local_storage_metrics_mutation_response
+
+  """
+  insert a single row into the table: "local_storage_metrics"
+  """
+  insert_local_storage_metrics_one(
+    """the row to be inserted"""
+    object: local_storage_metrics_insert_input!
+
+    """upsert condition"""
+    on_conflict: local_storage_metrics_on_conflict
+  ): local_storage_metrics
 
   """
   insert data into the table: "memory_logs"
@@ -2186,6 +2611,40 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [fps_logs_updates!]!
   ): [fps_logs_mutation_response]
+
+  """
+  update data of the table: "local_storage_metrics"
+  """
+  update_local_storage_metrics(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: local_storage_metrics_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: local_storage_metrics_set_input
+
+    """filter the rows which have to be updated"""
+    where: local_storage_metrics_bool_exp!
+  ): local_storage_metrics_mutation_response
+
+  """
+  update single row of the table: "local_storage_metrics"
+  """
+  update_local_storage_metrics_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: local_storage_metrics_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: local_storage_metrics_set_input
+    pk_columns: local_storage_metrics_pk_columns_input!
+  ): local_storage_metrics
+
+  """
+  update multiples rows of table: "local_storage_metrics"
+  """
+  update_local_storage_metrics_many(
+    """updates to execute, in order"""
+    updates: [local_storage_metrics_updates!]!
+  ): [local_storage_metrics_mutation_response]
 
   """
   update data of the table: "memory_logs"
@@ -3112,6 +3571,51 @@ type query_root {
 
   """fetch data from the table: "fps_logs" using primary key columns"""
   fps_logs_by_pk(id: uuid!): fps_logs
+
+  """
+  fetch data from the table: "local_storage_metrics"
+  """
+  local_storage_metrics(
+    """distinct select on columns"""
+    distinct_on: [local_storage_metrics_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [local_storage_metrics_order_by!]
+
+    """filter the rows returned"""
+    where: local_storage_metrics_bool_exp
+  ): [local_storage_metrics!]!
+
+  """
+  fetch aggregated fields from the table: "local_storage_metrics"
+  """
+  local_storage_metrics_aggregate(
+    """distinct select on columns"""
+    distinct_on: [local_storage_metrics_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [local_storage_metrics_order_by!]
+
+    """filter the rows returned"""
+    where: local_storage_metrics_bool_exp
+  ): local_storage_metrics_aggregate!
+
+  """
+  fetch data from the table: "local_storage_metrics" using primary key columns
+  """
+  local_storage_metrics_by_pk(id: uuid!): local_storage_metrics
 
   """
   fetch data from the table: "memory_logs"
@@ -4167,6 +4671,65 @@ type subscription_root {
     """filter the rows returned"""
     where: fps_logs_bool_exp
   ): [fps_logs!]!
+
+  """
+  fetch data from the table: "local_storage_metrics"
+  """
+  local_storage_metrics(
+    """distinct select on columns"""
+    distinct_on: [local_storage_metrics_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [local_storage_metrics_order_by!]
+
+    """filter the rows returned"""
+    where: local_storage_metrics_bool_exp
+  ): [local_storage_metrics!]!
+
+  """
+  fetch aggregated fields from the table: "local_storage_metrics"
+  """
+  local_storage_metrics_aggregate(
+    """distinct select on columns"""
+    distinct_on: [local_storage_metrics_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [local_storage_metrics_order_by!]
+
+    """filter the rows returned"""
+    where: local_storage_metrics_bool_exp
+  ): local_storage_metrics_aggregate!
+
+  """
+  fetch data from the table: "local_storage_metrics" using primary key columns
+  """
+  local_storage_metrics_by_pk(id: uuid!): local_storage_metrics
+
+  """
+  fetch data from the table in a streaming manner: "local_storage_metrics"
+  """
+  local_storage_metrics_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [local_storage_metrics_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: local_storage_metrics_bool_exp
+  ): [local_storage_metrics!]!
 
   """
   fetch data from the table: "memory_logs"

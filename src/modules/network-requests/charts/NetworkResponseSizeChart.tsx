@@ -83,8 +83,11 @@ export const NetworkResponseSizeChart = observer(() => {
                   );
 
                   return (
-                    <div className="bg-white border border-delta-200 p-4">
-                      {request?.id}
+                    <div className="bg-white border border-delta-200 p-4 rounded-md flex flex-col gap-y-2">
+                      <div className="flex items-center gap-x-2">
+                        <div className="font-semibold">Request id: </div>
+                        <div>{request?.id}</div>
+                      </div>
                     </div>
                   );
                 }}

@@ -36,26 +36,6 @@ export const NetworkRequestsStore = types
     settings: types.maybe(UserSettings),
   })
   .views((self) => ({
-    // get filteredRequests() {
-    //   if (!self.search.length) return self.requests;
-
-    //   return self.requests.filter((r) => {
-    //     const searchLower = self.search.toLowerCase().trim();
-
-    //     const urlMatch = r.url.toLowerCase().includes(searchLower);
-    //     const statusMatch = r.status
-    //       .toString()
-    //       .toLowerCase()
-    //       .includes(searchLower);
-
-    //     const methodMatch = r.method.toLowerCase().includes(searchLower);
-
-    //     const idMatch = r.id.toLowerCase().includes(searchLower);
-
-    //     return urlMatch || methodMatch || statusMatch || idMatch;
-    //   });
-    // },
-
     get filteredRequests() {
       let filtered = [...self.requests];
 
